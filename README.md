@@ -2,7 +2,7 @@
 
 This is a prototype to create a generic service shell to deliver a single page application. The service layer contains jbuilder templates to manage json requests, handlerbar templates to render page views, and a jquery client library to enable single page functionality.
 
-The for this demo the service mounts a rails engine for basic question and answer functionality.
+For this demo the service mounts a rails engine for basic question and answer functionality. 
 
 
 ### Versions:
@@ -14,18 +14,17 @@ The for this demo the service mounts a rails engine for basic question and answe
 	There is also the option to use SQLite, be sure to update the database.yml
  
 ### Configuration:
-
 ```shell
 	$ bundle
 ```
 
 ### Database creation and initialization
-	* development & test:
-	```shell
-		$ rake db:setup
-	```
+```shell
+	$ rake db:setup
+```
 
 ### Start app
+
 ```shell
 	rails s
 ```
