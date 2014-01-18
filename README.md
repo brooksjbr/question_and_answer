@@ -2,7 +2,10 @@
 
 This is a prototype to create a generic service shell to deliver a single page application. The service layer contains jbuilder templates to manage json requests, handlerbar templates to render page views, and a jquery client library to enable single page functionality.
 
-For this demo the service mounts a rails engine for basic question and answer functionality. 
+For this demo the service mounts a rails engine for basic question and answer functionality. All models, tests, and migrations are contained in the rails engine.
+
+* See Questionable repo for more detail.
+https://github.com/brooksjbr/questionable
 
 
 ### Versions:
