@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1>Answers</h1>
+</div>
+<p>
+	<a data-url="/service/questions" class='btn btn-primary' id="click-event" data-tmplt="questions/index">Back</a>
+</p>
+
+<div class="panel panel-primary" id={{question.unique_id}} style="overflow: hidden">
+	<div id="index-{{question.unique_id}}">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{question.title}}</h3>
+		</div>
+		<p id="content-{{unique_id}}">{{question.content}}</p>
+
+		<div style="vertical-align: bottom">
+			<a class="btn btn-primary btn-small" id="open-answer-form" data-uid={{question.unique_id}} rel="nofollow">Answer</a>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-primary" id="create-answer-form" style="display: none">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Give an Answer</h3>
+	</div>
+	{{> answers/partials/_new_form }}
+</div>
+
+<div class="answer-list">
+	{{#each answers}}
+		<div class="panel panel-primary" id="answer-container-{{unique_id}}">
+			<div id="answer-{{unique_id}}">
+				<div class="panel-heading">
+					Answer
+				</div>
+				<p id="answer-content-{{unique_id}}">{{content}}</p>
+				<p>
+					<a class="btn btn-primary btn-small" id="edit-answer" data-uid={{unique_id}}>Edit</a>
+					<a class="btn btn-danger btn-small" id="delete-answer" data-uid={{unique_id}} data-url={{delete_url}} rel="nofollow">Delete</a>
+				</p>
+			</div>
+			<div id="answer-edit-form-{{unique_id}}" style="display: none">
+				<div class="panel-heading">
+				  <h3 class="panel-title">Edit {{content}}</h3>
+				</div>
+				{{> answers/partials/_edit_form }}
+			</div>
+		</div>
+	{{/each}}
+</div>

@@ -1,0 +1,38 @@
+<h1>Listing answers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @question.answer.each do |answer| %>
+      <tr>
+        <td><%= answer.content %></td>
+        <td><%= answer.destroy %></td>
+        <td><%= link_to 'Show', question_answer_path(answer) %></td>
+        <td><%= link_to 'Edit', edit_question_answer_path(answer) %></td>
+        <td><%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Answer', new_question_answer_path %>
+
+<div class="question">
+  <h2><a href="{{url}}">{{name}}</a></h2>
+  <div class="details">
+    <!-- {{price}}
+    {{#released_at}}
+      | Released {{released_at}}
+    {{/released_at}} -->
+  </div>
+</div>

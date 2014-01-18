@@ -1,0 +1,18 @@
+<form class="new_question" id="new-question-form">
+  <div class="field">
+    <label class="control-label" for="question_title">Title</label><br>
+    <input class="form-control" id="question_title" name="title" type="text" value="{{title}}">
+  </div>
+  <div class="field">
+    <label class="control-label" for="question_content">Content</label><br>
+    <input class="form-control" rows="3" id="textArea" name="content" type="textarea" value="{{content}}">
+  </div>
+	<input id="question_user_id" name="user_id" type="hidden" value="1234" />
+	<input id="form_method" name="method" type="hidden" value={{form_method}} />
+	<input id="form_url" name="url" type="hidden" value={{form_url}} />
+	<input id="return_template" name="tmplt" type="hidden" value={{tmplt}} />
+  <p style="vertical-align: bottom">
+		<input class="btn btn-primary btn-small" name="commit" type="submit" id="submit-form" value={{button_name}} />
+		<a class="btn btn-danger btn-small" id="click-event" data-uid={{unique_id}} >Cancel</a>
+  </p>
+</form>

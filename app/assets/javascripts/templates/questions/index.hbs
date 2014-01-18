@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Questions</h1>
+</div>
+<p>
+	<a data-url="/service/questions/new" class='btn btn-primary' id="click-event" data-tmplt="questions/new">New Question</a>
+</p>
+
+{{#.}}
+<div class="panel panel-primary" id={{unique_id}} style="overflow: hidden">
+
+	<div id="index-{{unique_id}}">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="title-{{unique_id}}">{{title}}</h3>
+		</div>
+		<p id="content-{{unique_id}}">{{content}}</p>
+
+		<div style="vertical-align: bottom">
+			<ul class="nav nav-pills" style="float:left;" >
+	      <li class="active">
+					<a class="btn btn-small" id="see-answers" data-url={{answers_url}} data-tmplt='answers/index'>
+						See Answers
+						<span class="badge">{{answer_count}}</span>
+					</a>
+				</li>
+			</ul>
+
+			<div border="0" style="width:25%; float:right" > <!-- border-style:solid; border-color:blue; -->
+				<a class="btn btn-primary btn-small" id="edit-event" data-uid={{unique_id}}>Edit</a>
+				<a class="btn btn-danger btn-small" id="delete-question" data-unique-id={{unique_id}} data-url={{delete_url}} rel="nofollow">Delete</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="form-{{unique_id}}" style="display: none">
+		<div class="panel-heading">
+		  <h3 class="panel-title">Edit {{title}}</h3>
+		</div>
+		{{> questions/partials/_edit_form }}
+	</div>
+</div>
+{{/.}}
+
+<p>
+	<a data-url="/service/questions/new" class='btn btn-primary' id="click-event" data-tmplt="questions/new">New Question</a>
+</p>
+
