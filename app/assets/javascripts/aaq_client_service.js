@@ -70,7 +70,7 @@
 	
 	// Form submit for create and updates to questions
 	aaqClientService.submitAnswerForm = function (data) {
-aaqClientService.consoleLogger("Answer form ajax post")
+
 		//Retain method type, urls, and callbacks for pre/post form handling
 		var postdata = data;
 		var url = checkJsonRequest(postdata.url)
@@ -116,7 +116,7 @@ aaqClientService.consoleLogger("Answer form ajax post")
 	}
 	
 	aaqClientService.serializeFormData = function(id) {
-		aaqClientService.consoleLogger("Answer form data serialized")
+		
 		$('#'+id).submit(function() {			
 			var json = {};
 		    var formdata = $(this).serializeArray();
