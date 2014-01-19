@@ -11,8 +11,6 @@ $(document).ready(function() {
 	//Show new answer form
 	$('body').delegate("#open-answer-form", "click", function() {
 		var uid = $(this).data("uid")
-		aaqClientService.consoleLogger($("#new-answer-form-"+uid+" #textArea").val(""))
-		aaqClientService.consoleLogger("Open answer form")
 		aaqClientService.toggleCreateAnswer(uid)
 	});
 
@@ -24,7 +22,6 @@ $(document).ready(function() {
 	
 	$("body").delegate("#answer-button", "click", function() {
 		var form_id = $(this).data("form")
-		aaqClientService.consoleLogger("Answer form button clicked")
 		aaqClientService.serializeFormData(form_id);
 	});
 	
