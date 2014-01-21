@@ -1,14 +1,17 @@
-<form class="new_answer" id="new-answer-form-{{question.unique_id}}">
-  <div class="field">
-    <label class="control-label" for="answer_content">Answer</label><br>
-    <input class="form-control" rows="3" id="textArea" name="content" type="textarea" value="">
-  </div>
+<form class="new_answer" id="new-answer-form">
+	<div class="field">
+		<label class="control-label" for="answer_content">Answer</label><br>
+		<input class="form-control" rows="3" id="textArea" name="content" type="textarea" value="">
+	</div>
+
 	<input id="question_user_id" name="user_id" type="hidden" value="1234" />
 	<input id="form_method" name="method" type="hidden" value={{question.form_method}} />
 	<input id="form_url" name="url" type="hidden" value={{question.form_url}} />
 	<input id="question_id" name="question_id" type="hidden" value={{question.id}} />
-  <p style="vertical-align: bottom">
-		<input class="btn btn-primary btn-small" type="submit" name="answer-button" value="Submit" id="answer-button" data-form="new-answer-form-{{question.unique_id}}"/>
+
+	<br/>
+	<p style="vertical-align: bottom">
+		<input class="btn btn-primary btn-small" type="submit" name="answer-button" value="Submit" id="new-answer-button" data-form="new-answer-form"/>
 		<a class="btn btn-danger btn-small" id="cancel-answer-form" data-uid={{question.unique_id}}>Cancel</a>
-  </p>
+	</p>
 </form>

@@ -1,18 +1,3 @@
-# @questions.each do |q|
-#   json.questions q, :title, :content
-# end
-
-# @questions.each do |q|
-#   #json.set! :questions do
-#     json.set! :title, q.title 
-#     json.set! :content, q.content
-#     json.set! :show_url, question_path(q)
-#     json.set! :edit_url, edit_question_path(q)
-#     json.set! :delete_url, question_path(q)
-#     json.set! :tmplt, "questions/index"
-#   #end
-# end
-
 json.array! @questions do |question|
   json.title "#{question.title}"
   json.content "#{question.content}"

@@ -39,33 +39,9 @@ $(document).ready(function() {
 	});
 	
 	//fetch form data, format json, and submit formdata
-	$('body').delegate("#submit-form", "click", function() {
-		var form_id = $(this).data("form-id");
-		var id;
-			
-		if (form_id == undefined) {
-			id = '#new-question-form'
-		} else {
-			id = '#edit-question-form-'+form_id
-		}
-		
-		$(id).submit(function(){
-			var json = {};
-		    var formdata = $(this).serializeArray();
-		    $.each(formdata, function() {
-		        if (json[this.name] !== undefined) {
-		            if (!json[this.name].push) {
-		                json[this.name] = [json[this.name]];
-		            }
-		            json[this.name].push(this.value || '');
-		        } else {
-		            json[this.name] = this.value || '';
-		        }
-		    });
-		
-			aaqClientService.submitForm(json);
-			return false
-		});
+	$('body').delegate("#question-button", "click", function() {
+		var form_id = $(this).data("form");
+		aaqClientService.serializeFormData(form_id, aaqClientService.submitQuestionForm);
 	});
 	
 });

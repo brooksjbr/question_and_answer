@@ -3,9 +3,13 @@
     <label class="control-label" for="answer_content">Content</label><br>
     <input class="form-control" id="answer-content-{{unique_id}}" rows="3" id="textArea" name="content" type="textarea" value="{{content}}">
   </div>
+
 	<input id="answer_user_id" name="user_id" type="hidden" value="1234" />
 	<input id="form_method" name="method" type="hidden" value={{form_method}} />
 	<input id="form_url" name="url" type="hidden" value={{form_url}} />
+
+
+  <br/>
   <p style="vertical-align: bottom">
 		<input class="btn btn-primary btn-small" type="submit" name="answer-button" value="Submit" data-form="edit-answer-form-{{unique_id}}" id="answer-button" />
 		<a class="btn btn-danger btn-small" id="cancel-answer-edit" data-uid={{unique_id}}>Cancel</a>

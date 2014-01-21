@@ -16,7 +16,7 @@
 
 		<div style="vertical-align: bottom">
 			<ul class="nav nav-pills" style="float:left;" >
-	      <li class="active">
+	      		<li class="active">
 					<a class="btn btn-small" id="see-answers" data-url={{answers_url}} data-tmplt='answers/index'>
 						See Answers
 						<span class="badge">{{answer_count}}</span>
@@ -39,9 +39,11 @@
 	</div>
 </div>
 
+{{/.}}
+
+{{#if .}}
 <p>
 	<a data-url="/service/questions/new" class='btn btn-primary' id="click-event" data-tmplt="questions/new">New Question</a>
 </p>
-{{/.}}
-
+{{/if}}
 

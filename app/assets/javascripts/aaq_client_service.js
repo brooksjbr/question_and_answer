@@ -36,7 +36,7 @@
 	}
 	
 	// Form submit for create and updates to questions
-	aaqClientService.submitForm = function (data) {
+	aaqClientService.submitQuestionForm = function (data) {
 
 		//Retain method type, urls, and callbacks for pre/post form handling
 		var postdata = data;
@@ -70,7 +70,6 @@
 	
 	// Form submit for create and updates to questions
 	aaqClientService.submitAnswerForm = function (data) {
-
 		//Retain method type, urls, and callbacks for pre/post form handling
 		var postdata = data;
 		var url = checkJsonRequest(postdata.url)
@@ -93,30 +92,26 @@
 				if (form_method == "put") {
 					aaqClientService.updateAnswerContent(data);
 					aaqClientService.toggleEditAnswer(data.unique_id)
+					$('#edit-answer-form-'+data.unique_id).unbind('submit');
 				} else if (form_method == "post") {
-					aaqClientService.consoleLogger("Answer form ajax post")
 					data["delete_url"] = answerUrl(data.unique_id)
 					data["form_url"] = answerUrl(data.unique_id)
 					data["form_method"] = 'put'
-					aaqClientService.consoleLogger(data);
 					var html = HandlebarsTemplates["answers/answer"](data);
 					$('.answer-list').prepend(html);
-					aaqClientService.consoleLogger("render new answer, toggle form.")
-					aaqClientService.consoleLogger(data)
-					$("#open-answer-form").show();
-					$("#create-answer-form").hide();
-					//aaqClientService.toggleCreateAnswer(data.unique_id)
+					aaqClientService.toggleCreateAnswer(data.unique_id)
+					$('#new-answer-form').unbind('submit');
 				}
 			}
 		});
 		
-		//aaqClientService.resetForm()
+		aaqClientService.resetForm()
 		
-		//return false;
+		return false;
 	}
 	
-	aaqClientService.serializeFormData = function(id) {
-		
+	aaqClientService.serializeFormData = function(id, ajaxcallback) {
+
 		$('#'+id).submit(function() {			
 			var json = {};
 		    var formdata = $(this).serializeArray();
@@ -131,7 +126,9 @@
 		        }
 		    });
 
-			aaqClientService.submitAnswerForm(json);
+		    // callback ajax handler for question or answers
+            ajaxcallback(json)
+
 			return false;
 		});
 	}
@@ -177,10 +174,9 @@
 	}
 	
 	aaqClientService.toggleCreateAnswer = function (uid) {
-		aaqClientService.consoleLogger("toggle answer response form.."+uid)
 		$("#open-answer-form").toggle();
 		$("#create-answer-form").toggle();
-		//return false;
+		return false;
 	}
 	
 	aaqClientService.toggleEditAnswer = function (uid) {

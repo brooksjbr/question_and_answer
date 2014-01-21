@@ -4,11 +4,10 @@ GIT
   specs:
     acts_as_seo_friendly (2.0.0)
 
-GIT
-  remote: git://github.com/brooksjbr/questionable
-  revision: c00620f27a9e22c00dc0fe262020a91754bb6f57
+PATH
+  remote: vendor/engines/questionable
   specs:
-    questionable (0.0.3.beta)
+    questionable (0.0.4)
       rails (~> 4.0.0)
 
 GEM

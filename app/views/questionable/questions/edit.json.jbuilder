@@ -1,5 +1,3 @@
-# json.extract! @question, :id, :title, :content
-
 json.set! :id, @question.id
 json.set! :title, @question.title
 json.set! :content, @question.content
