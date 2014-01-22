@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 	$("body").delegate("#answer-button", "click", function() {
 		var form_id = $(this).data("form");
-		aaqClientService.serializeFormData(form_id, aaqClientService.submitAnswerForm);
+		aaqClientService.serializeFormData("#"+form_id, aaqClientService.submitAnswerForm);
 	});
 
 	$("body").delegate("#delete-answer", "click", function() {

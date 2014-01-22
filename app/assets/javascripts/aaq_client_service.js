@@ -51,8 +51,9 @@
 		$.ajax({
 			type: form_method,
 		  	url: url,
-		  	data: {_method: form_method, question: data},
-		  	error: (function() { alert("Something went wrong with form submit, should handle this gracefully and message user.."); }),
+		  	data: {_method: form_method, question: data}
+		}).fail(function (data) {
+			aaqClientService.questionErrorHandler(data);
 		}).done(function (data) { 
 			// Determine post form handling by request method
 			if (form_method == "put") {
@@ -65,6 +66,54 @@
 			}
 		});
 
+		return false;
+	}
+
+	// Update form with error information
+	aaqClientService.questionErrorHandler = function (data) {
+
+		if (typeof data == undefined) {
+			//Do something graceful
+		}
+
+		var question = data.responseJSON.question
+		var errors = data.responseJSON.errors
+
+		$.each( errors, function( key, value ) {
+			if (question.unique_id == null) {
+				$("#question_"+key).addClass( "input_error" );
+			  	$("#question_"+key).val(key+" "+value)
+			} else {
+				$("#question_"+key+"_"+question.unique_id).addClass( "input_error" );
+				$("#question_"+key+"_"+question.unique_id).val(key+" "+value)
+			}
+		});
+
+		aaqClientService.disableButton('input[type="submit"]#question-button')
+
+		return false;
+	}
+
+	// Restore originial form values
+	aaqClientService.restoreQuestionForm = function (id) {
+		var title = $("#title-"+id).text()
+		var content = $("#content-"+id).text()
+
+		$("input.input_error").removeClass( "input_error" );
+		$("#question_title_"+id).val(title)
+		$("#question_content_"+id).val(content)
+		return false;
+	}
+
+	// Disable submit button, disable because of error
+	aaqClientService.disableButton = function (button) {
+		$(button).attr("disabled", "disabled");
+		return false;
+	}
+
+	//Enable submit button, enable after error is corrented
+	aaqClientService.enableButton = function (button) {
+		$(button).removeAttr('disabled');
 		return false;
 	}
 	
@@ -86,7 +135,9 @@
 		  	url: url,
 		  	data: {_method: form_method, answer: data},
 			dataType: 'json',
-		  	error: (function() { alert("Something went wrong with form submit, should handle this gracefully and message user.."); }),
+		  	error: (function() { 
+		  		alert("Something went wrong with form submit, should handle this gracefully and message user.."); 
+		  	}),
 		}).done(function (data) {
 			if( data ) {
 				if (form_method == "put") {
@@ -110,9 +161,10 @@
 		return false;
 	}
 	
+	//Pull form data for submission
 	aaqClientService.serializeFormData = function(id, ajaxcallback) {
 
-		$('#'+id).submit(function() {			
+		$(id).submit(function() {			
 			var json = {};
 		    var formdata = $(this).serializeArray();
 		    $.each(formdata, function() {
@@ -129,10 +181,14 @@
 		    // callback ajax handler for question or answers
             ajaxcallback(json)
 
+            // Prevent double submits
+            $(id).unbind();
+
 			return false;
 		});
 	}
 	
+	// Empty form fields
 	aaqClientService.resetForm = function (id) {
 		if (id) {
 			$("form#"+id)[0].reset();	
@@ -142,6 +198,7 @@
 		
 	}
 	
+	// Force user to confirm delete action
 	aaqClientService.confirmDelete = function (url, uid) {
 		if (confirm("Are you sure you want to delete this item?")){
 			aaqClientService.deleteContent(url, uid)
@@ -149,7 +206,8 @@
 			return false;
 		}
 	}
-		
+	
+	// Ajax request to delete content	
 	aaqClientService.deleteContent = function (url, uid) {
 		var url = checkJsonRequest( url );
 		$.ajax({
@@ -194,6 +252,12 @@
 	aaqClientService.consoleLogger = function(foo) {
 		console.log(foo);
 	}
+
+	// Trigger modal window 
+	aaqClientService.modalWindow = function(message) {
+
+	}
+
 	
 	/*****************************/
     /**** End Public Methods *****/

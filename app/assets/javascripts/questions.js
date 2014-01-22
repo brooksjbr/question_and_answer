@@ -27,9 +27,12 @@ $(document).ready(function() {
 		aaqClientService.toggleEditQuestion($(this).data("uid"));
 	});
 	
-	// Hide edit form, show index
+	// Cancel edit, hide form, retore originial content, show index
 	$('body').delegate("#cancel-question-edit", "click", function() {
-		aaqClientService.toggleEditQuestion($(this).data("uid"));
+		var id = $(this).data("uid")
+		aaqClientService.toggleEditQuestion(id);
+		aaqClientService.enableButton('input[type="submit"]#question-button');
+		aaqClientService.restoreQuestionForm(id);
 	});
 	
 	$("body").delegate("#delete-question", "click", function() {
@@ -41,7 +44,12 @@ $(document).ready(function() {
 	//fetch form data, format json, and submit formdata
 	$('body').delegate("#question-button", "click", function() {
 		var form_id = $(this).data("form");
-		aaqClientService.serializeFormData(form_id, aaqClientService.submitQuestionForm);
+		aaqClientService.serializeFormData("#"+form_id, aaqClientService.submitQuestionForm);
 	});
-	
+
+	$("body").delegate(".input_error", "click", function() {
+		$(this).val("");
+		aaqClientService.enableButton('input[type="submit"]#question-button');
+		$(".input_error").removeClass( "input_error" );
+	});
 });
