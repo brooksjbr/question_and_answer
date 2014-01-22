@@ -1,6 +1,8 @@
 ServiceSkeleton::Application.routes.draw do
   
   mount Questionable::Engine, at: "service"
+
+  root "dumby#index"
   
   # resources :questions do
   #   resources :answers
