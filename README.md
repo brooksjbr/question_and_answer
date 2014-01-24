@@ -42,12 +42,16 @@ To setup the Questionable in you local dev environment follow these steps:
 ```
 
 In the Gemfile comment out:
+```ruby
 # Question and Answer Engine Gem
 #gem 'questionable', '~> 0.0.3', git: "git://github.com/brooksjbr/questionable"
+```
 
 Add this line.
+```ruby
 # To run engine from vendor off local checkout symlink to engine and replace git path with local path, bundle
 gem 'questionable', path: "vendor/engines/questionable"
+```
 
 ```shell
 	$ bundle
