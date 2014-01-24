@@ -27,7 +27,7 @@ https://github.com/brooksjbr/questionable
 ```shell
 	rails s
 ```
- Visit test page:
+ Visit test page: (default routes is slash)
 	localhost:3000/
 
 ### Local dev with Questionable rails engine
