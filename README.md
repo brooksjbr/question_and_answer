@@ -3,7 +3,7 @@
 Questions and Answers is an example implementation of the Questionable rails engine which supports a single-page application (SPA). The SPA functionality is managed through handlebar templates
 and a custom client library. The intent is Questions and Anwsers can be implemented on any webpage via a single div and referrence to the client js and css. Making Questions and Answers technology agnostic.
 
-* See Questionable repo for more detail.
+* See Questionable repo for more detail about the rails engine.
 https://github.com/brooksjbr/questionable
 
 ### Versions:
