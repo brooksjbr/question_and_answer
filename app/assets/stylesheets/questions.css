@@ -1,4 +1,41 @@
-.input_error {
-	border-color: red; 
-	border-width: 1px;
+form.qaform {
+	width: 370px;
+	font-size: 1.0em;
+	color: #333;
 }
+
+form.qaform legend {
+	padding-left: 0;
+}
+
+form.qaform legend, form.qaform label {
+	color: #333;
+}
+
+form.qaform fieldset {
+	border: none;
+	border-top: 1px solid #C9DCA6;
+	background: url(../images/qaform-fieldset.gif) left bottom repeat-x;
+	background-color: #F8FDEF;
+}
+
+form.qaform fieldset fieldset {
+	background: none;
+}
+
+form.qaform fieldset p, form.qaform fieldset fieldset {
+	padding: 5px 10px 7px;
+	background: url(../images/qaform-divider.gif) left bottom repeat-x;
+}
+
+form.qaform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+}
+div.error { display: none; }
+input {	border: 1px solid black; }
+input.checkbox { border: none }
+input:focus { border: 1px dotted black; }
+input.error { border: 1px dotted red; }
+form.qaform .gray * { color: gray; }

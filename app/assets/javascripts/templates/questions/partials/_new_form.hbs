@@ -1,11 +1,11 @@
-<form class="new_question" id="new-question-form">
+<form class="qaform" id="new-question-form">
   <div class="field">
     <label class="control-label" for="question_title">Title</label><br>
-    <input class="form-control" id="question_title" name="title" type="text" value="{{title}}">
+    <input class="form-control" id="question_title" name="title" type="text" required />
   </div>
   <div class="field">
     <label class="control-label" for="question_content">Content</label><br>
-    <input class="form-control" rows="3" id="question_content" name="content" type="textarea" value="{{content}}">
+    <input class="form-control" rows="3" id="question_content" name="content" type="text" required />
   </div>
 	<input id="question_user_id" name="user_id" type="hidden" value="1234" />
 	<input id="form_method" name="method" type="hidden" value={{form_method}} />
@@ -13,7 +13,7 @@
 	<input id="return_template" name="tmplt" type="hidden" value={{tmplt}} />
   <br/>
   <p style="vertical-align: bottom">
-		<input class="btn btn-primary btn-small" name="commit" type="submit" id="question-button" data-form=new-question-form value={{button_name}} />
+		<button class="btn btn-primary btn-small" id="question-button" data-form=new-question-form>{{button_name}}</button>
 		<a class="btn btn-danger btn-small" id="click-event" data-uid={{unique_id}} >Cancel</a>
   </p>
 </form>

@@ -1,7 +1,7 @@
-<form class="new_answer" id="new-answer-form">
+<form class="qaform" id="new-answer-form">
 	<div class="field">
 		<label class="control-label" for="answer_content">Answer</label><br>
-		<input class="form-control" rows="3" id="textArea" name="content" type="textarea" value="">
+		<input class="form-control" rows="3" id="answer-content" name="content" type="text" value="" required>
 	</div>
 
 	<input id="question_user_id" name="user_id" type="hidden" value="1234" />
@@ -11,7 +11,7 @@
 
 	<br/>
 	<p style="vertical-align: bottom">
-		<input class="btn btn-primary btn-small" type="submit" name="answer-button" value="Submit" id="new-answer-button" data-form="new-answer-form"/>
+		<button class="btn btn-primary btn-small" name="answer-button" id="answer-button" data-form="new-answer-form">Create</button>
 		<a class="btn btn-danger btn-small" id="cancel-answer-form" data-uid={{question.unique_id}}>Cancel</a>
 	</p>
 </form>

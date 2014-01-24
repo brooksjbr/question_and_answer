@@ -1,14 +1,102 @@
-// AAQ CLIENT SERVICE LIBRARY
+// Questions and Answers Client Service Library
 // All client service functions should be namespaced here
 // to prevent name collisions
-(function( aaqClientService, $, undefined ) {
+(function( qaClientService, $, undefined ) {
 
-    /*******************************/
-    /**** Begin Public Methods *****/
-    /*******************************/
+  /*******************************/
+  /**** Begin Public Methods *****/
+  /*******************************/
+
+  /**********************************/
+  /**** Question Public Methods *****/
+  /**********************************/
+		
+	// Form submit for create and updates to questions
+	qaClientService.submitQuestionForm = function (data) {
+
+		//Retain method type, urls, and callbacks for pre/post form handling
+		var postdata = data;
+		var url = checkJsonRequest(postdata.url)
+		var form_method = String(postdata.method)
+
+		// Clean up dataset for strong params in controller
+		delete data.method;
+		delete data.url;
+		delete data.tmplt;
+
+		$.ajax({
+			type: form_method,
+		  	url: url,
+		  	data: {_method: form_method, question: data}
+		}).fail(function (data) {
+			alert(" We're sorry, something went wrong with you submission. Please try again.")
+		}).done(function (data) { 
+			// Determine post form handling by request method
+			if (form_method == "put") {
+				qaClientService.updateQuestionContent(data);
+				qaClientService.toggleEditQuestion(data.unique_id)
+			} else if (form_method == "post") {
+				qaClientService.getPage(url, postdata.tmplt)
+			} else {
+				qaClientService.getPage("/service/questions.json")
+			}
+		});
+
+		return false;
+	}
+
+	/**********************************/
+  /**** Answer Public Methods *******/
+  /**********************************/
+	
+	// Form submit for create and updates to questions
+	qaClientService.submitAnswerForm = function (data) {
+
+		//Retain method type, urls, and callbacks for pre/post form handling
+		var postdata = data;
+		var url = checkJsonRequest(postdata.url)
+		var form_method = String(postdata.method)
+		var answerUrl = getAnswerUrl(postdata.url);
+
+		// Clean up dataset for strong params in controller
+		delete data.method;
+		delete data.url;
+		delete data.tmplt;
+
+		$.ajax({
+			type: form_method,
+		  url: url,
+		  data: {_method: form_method, answer: data},
+			dataType: 'json'
+		}).fail(function (data) {
+			alert(" We're sorry, something went wrong with you submission. Please try again.")
+		}).done(function (data) {
+			if( data ) {
+				if (form_method == "put") {
+					qaClientService.updateAnswerContent(data);
+					qaClientService.toggleEditAnswer(data.unique_id)
+				} else if (form_method == "post") {
+					data["delete_url"] = answerUrl(data.unique_id)
+					data["form_url"] = answerUrl(data.unique_id)
+					data["form_method"] = 'put'
+					var html = HandlebarsTemplates["answers/answer"](data);
+					$('.answer-list').prepend(html);
+					qaClientService.toggleCreateAnswer(data.unique_id)
+				}
+			}
+		});
+		
+		qaClientService.resetForm()
+		
+		return false;
+	}
+
+	/***********************************************/
+	/*  Shared Question and Answer methods */
+	/***********************************************/
 
 	// Fetch page/template data, render results
-	aaqClientService.getPage = function (url, tmplt)
+	qaClientService.getPage = function (url, tmplt)
 	{
 		url = checkJsonRequest(url)
 		
@@ -35,161 +123,36 @@
 		});
 	}
 	
-	// Form submit for create and updates to questions
-	aaqClientService.submitQuestionForm = function (data) {
-
-		//Retain method type, urls, and callbacks for pre/post form handling
-		var postdata = data;
-		var url = checkJsonRequest(postdata.url)
-		var form_method = String(postdata.method)
-
-		// Clean up dataset for strong params in controller
-		delete data.method;
-		delete data.url;
-		delete data.tmplt;
-
-		$.ajax({
-			type: form_method,
-		  	url: url,
-		  	data: {_method: form_method, question: data}
-		}).fail(function (data) {
-			aaqClientService.questionErrorHandler(data);
-		}).done(function (data) { 
-			// Determine post form handling by request method
-			if (form_method == "put") {
-				aaqClientService.updateQuestionContent(data);
-				aaqClientService.toggleEditQuestion(data.unique_id)
-			} else if (form_method == "post") {
-				aaqClientService.getPage(url, postdata.tmplt)
-			} else {
-				aaqClientService.getPage("http://localhost:3000/service/questions.json")
-			}
-		});
-
-		return false;
-	}
-
-	// Update form with error information
-	aaqClientService.questionErrorHandler = function (data) {
-
-		if (typeof data == undefined) {
-			//Do something graceful
-		}
-
-		var question = data.responseJSON.question
-		var errors = data.responseJSON.errors
-
-		$.each( errors, function( key, value ) {
-			if (question.unique_id == null) {
-				$("#question_"+key).addClass( "input_error" );
-			  	$("#question_"+key).val(key+" "+value)
-			} else {
-				$("#question_"+key+"_"+question.unique_id).addClass( "input_error" );
-				$("#question_"+key+"_"+question.unique_id).val(key+" "+value)
-			}
-		});
-
-		aaqClientService.disableButton('input[type="submit"]#question-button')
-
-		return false;
-	}
-
-	// Restore originial form values
-	aaqClientService.restoreQuestionForm = function (id) {
-		var title = $("#title-"+id).text()
-		var content = $("#content-"+id).text()
-
-		$("input.input_error").removeClass( "input_error" );
-		$("#question_title_"+id).val(title)
-		$("#question_content_"+id).val(content)
-		return false;
-	}
-
-	// Disable submit button, disable because of error
-	aaqClientService.disableButton = function (button) {
-		$(button).attr("disabled", "disabled");
-		return false;
-	}
-
-	//Enable submit button, enable after error is corrented
-	aaqClientService.enableButton = function (button) {
-		$(button).removeAttr('disabled');
-		return false;
-	}
-	
-	// Form submit for create and updates to questions
-	aaqClientService.submitAnswerForm = function (data) {
-		//Retain method type, urls, and callbacks for pre/post form handling
-		var postdata = data;
-		var url = checkJsonRequest(postdata.url)
-		var form_method = String(postdata.method)
-		var answerUrl = getAnswerUrl(postdata.url);
-
-		// Clean up dataset for strong params in controller
-		delete data.method;
-		delete data.url;
-		delete data.tmplt;
-		
-		$.ajax({
-			type: form_method,
-		  	url: url,
-		  	data: {_method: form_method, answer: data},
-			dataType: 'json',
-		  	error: (function() { 
-		  		alert("Something went wrong with form submit, should handle this gracefully and message user.."); 
-		  	}),
-		}).done(function (data) {
-			if( data ) {
-				if (form_method == "put") {
-					aaqClientService.updateAnswerContent(data);
-					aaqClientService.toggleEditAnswer(data.unique_id)
-					$('#edit-answer-form-'+data.unique_id).unbind('submit');
-				} else if (form_method == "post") {
-					data["delete_url"] = answerUrl(data.unique_id)
-					data["form_url"] = answerUrl(data.unique_id)
-					data["form_method"] = 'put'
-					var html = HandlebarsTemplates["answers/answer"](data);
-					$('.answer-list').prepend(html);
-					aaqClientService.toggleCreateAnswer(data.unique_id)
-					$('#new-answer-form').unbind('submit');
-				}
-			}
-		});
-		
-		aaqClientService.resetForm()
-		
-		return false;
-	}
-	
 	//Pull form data for submission
-	aaqClientService.serializeFormData = function(id, ajaxcallback) {
+	qaClientService.serializeFormData = function(id, ajaxcallback) {
 
-		$(id).submit(function() {			
+		$(id).submit(function() {
+			event.preventDefault();		
 			var json = {};
-		    var formdata = $(this).serializeArray();
-		    $.each(formdata, function() {
-		        if (json[this.name] !== undefined) {
-		            if (!json[this.name].push) {
-		                json[this.name] = [json[this.name]];
-		            }
-		            json[this.name].push(this.value || '');
-		        } else {
-		            json[this.name] = this.value || '';
-		        }
-		    });
+		  var formdata = $(this).serializeArray();
+	    $.each(formdata, function() {
+        if (json[this.name] !== undefined) {
+          if (!json[this.name].push) {
+            json[this.name] = [json[this.name]];
+          }
+          json[this.name].push(this.value || '');
+        } else {
+          json[this.name] = this.value || '';
+        }
+	    });
 
-		    // callback ajax handler for question or answers
-            ajaxcallback(json)
+		  // callback ajax handler for question or answers
+      ajaxcallback(json)
 
-            // Prevent double submits
-            $(id).unbind();
+      // Prevent double submits
+      $(id).unbind();
 
 			return false;
 		});
 	}
 	
 	// Empty form fields
-	aaqClientService.resetForm = function (id) {
+	qaClientService.resetForm = function (id) {
 		if (id) {
 			$("form#"+id)[0].reset();	
 		} else {
@@ -199,74 +162,67 @@
 	}
 	
 	// Force user to confirm delete action
-	aaqClientService.confirmDelete = function (url, uid) {
+	qaClientService.confirmDelete = function (url, uid) {
 		if (confirm("Are you sure you want to delete this item?")){
-			aaqClientService.deleteContent(url, uid)
+			qaClientService.deleteContent(url, uid)
 		} else {
 			return false;
 		}
 	}
 	
 	// Ajax request to delete content	
-	aaqClientService.deleteContent = function (url, uid) {
+	qaClientService.deleteContent = function (url, uid) {
 		var url = checkJsonRequest( url );
 		$.ajax({
 			type: "DELETE",
-		  	url: url,
-		  	success: (function() {$('#'+uid).remove()}),
-		  	error: (function() { alert("Something went wrong with form submit, should handle this gracefully.."); })
+		  url: url,
+		  success: (function() {$('#'+uid).remove()}),
+		  error: (function() { alert("Something went wrong with form submit, should handle this gracefully.."); })
 		});
 	}	
 	
-	aaqClientService.updateQuestionContent = function (data) {		
+	qaClientService.updateQuestionContent = function (data) {		
 		$("#title-"+data.unique_id).text(data.title)
 		$("#content-"+data.unique_id).text(data.content)
 		return false;
 	}
 
 	// Hide/Show edit question form
-	aaqClientService.toggleEditQuestion = function (uid) {
+	qaClientService.toggleEditQuestion = function (uid) {
 		$('#index-'+uid).toggle();
 		$('#form-'+uid).toggle();
 		return false;
 	}
 	
-	aaqClientService.toggleCreateAnswer = function (uid) {
+	qaClientService.toggleCreateAnswer = function (uid) {
 		$("#open-answer-form").toggle();
 		$("#create-answer-form").toggle();
 		return false;
 	}
 	
-	aaqClientService.toggleEditAnswer = function (uid) {
+	qaClientService.toggleEditAnswer = function (uid) {
 		$('#answer-'+uid).toggle();
 		$('#answer-edit-form-'+uid).toggle();
 		return false;
 	}
 	
-	aaqClientService.updateAnswerContent = function (data) {		
+	qaClientService.updateAnswerContent = function (data) {		
 		$("#answer-content-"+data.unique_id).text(data.content)
 		return false;
 	}
 	
 	// Logger
-	aaqClientService.consoleLogger = function(foo) {
-		console.log(foo);
+	qaClientService.consoleLogger = function(msg) {
+		console.log(msg);
 	}
-
-	// Trigger modal window 
-	aaqClientService.modalWindow = function(message) {
-
-	}
-
 	
 	/*****************************/
-    /**** End Public Methods *****/
-    /*****************************/
+  /**** End Public Methods *****/
+  /*****************************/
     
-
-    /****************************************/
-    /******* Begin Private Methods **********/
-   	/****************************************/
+  /****************************************/
+  /******* Begin Private Methods **********/
+  /****************************************/
 
 	// requesting url should include .json extension
 	function checkJsonRequest(url) {
@@ -287,8 +243,8 @@
 	}
 	
 	/****************************************/
-    /********* End Private Methods **********/
-   	/****************************************/
+  /********* End Private Methods **********/
+  /****************************************/
     
-}( window.aaqClientService = window.aaqClientService || {}, jQuery ));
+}( window.qaClientService = window.qaClientService || {}, jQuery ));
 

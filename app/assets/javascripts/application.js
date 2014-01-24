@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require handlebars.runtime.js
-//= require jquery.colorbox.js
+//= require jquery.validate.js
+//= require additional-methods.js
 //= require_tree .
 //= require_tree ./templates
