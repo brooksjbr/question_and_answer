@@ -53,8 +53,9 @@ Add this line.
 gem 'questionable', path: "vendor/engines/questionable"
 ```
 
+Run bundle
 ```shell
-	$ bundle
+$ bundle
 ```
 
 ### Future Features
