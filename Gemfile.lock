@@ -4,8 +4,9 @@ GIT
   specs:
     acts_as_seo_friendly (2.0.0)
 
-PATH
-  remote: vendor/engines/questionable
+GIT
+  remote: git://github.com/brooksjbr/questionable
+  revision: fba459bd8f29db883468e2ab3234fc3f2d09cdc4
   specs:
     questionable (0.0.4)
       rails (~> 4.0.0)
@@ -181,7 +182,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   pg
-  questionable!
+  questionable (~> 0.0.3)!
   rails (= 4.0.0)
   rspec-rails
   sass-rails (~> 4.0.0)

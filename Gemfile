@@ -28,10 +28,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Question and Answer Engine
-#gem 'questionable', '~> 0.0.3', git: "git://github.com/brooksjbr/questionable"
-
-# To run engine from vendor off local checkout symlink to engine and replace git path with local path, bundle
-gem 'questionable', path: "vendor/engines/questionable"
+gem 'questionable', '~> 0.0.3', git: "git://github.com/brooksjbr/questionable"
 
 # Gem dependency for questionable, can't add to gemspec for inclusion.
 # Updated act_as_seo_friendly gem for rails 4 add-seo-friendly-urls
