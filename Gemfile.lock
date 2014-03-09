@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: https://github.com/brooksjbr/questionable
-  revision: 7b65f1e79a194cb435940e89ed0dabe1b4018a70
+  revision: d4c10bfed98c7a6b6defd6a9847c2bc1df6b10a7
   specs:
-    questionable (0.0.5)
+    questionable (0.0.6)
       rails (~> 4.0.0)
 
 GEM
@@ -190,7 +190,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   pg
-  questionable (~> 0.0.5)!
+  questionable (~> 0.0.6)!
   rails (= 4.0.0)
   rails_serve_static_assets
   rspec-rails

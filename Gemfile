@@ -28,7 +28,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Question and Answer Engine
-gem 'questionable', '~> 0.0.5', git: "https://github.com/brooksjbr/questionable"
+gem 'questionable', '~> 0.0.6', git: "https://github.com/brooksjbr/questionable"
 
 # Gem dependency for questionable, can't add to gemspec for inclusion.
 # Updated act_as_seo_friendly gem for rails 4 add-seo-friendly-urls
