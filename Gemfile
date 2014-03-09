@@ -28,11 +28,11 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Question and Answer Engine
-gem 'questionable', '~> 0.0.3', git: "git://github.com/brooksjbr/questionable"
+gem 'questionable', '~> 0.0.5', git: "https://github.com/brooksjbr/questionable"
 
 # Gem dependency for questionable, can't add to gemspec for inclusion.
 # Updated act_as_seo_friendly gem for rails 4 add-seo-friendly-urls
-gem 'acts_as_seo_friendly', :git => 'git://github.com/brooksjbr/acts_as_seo_friendly'
+gem 'acts_as_seo_friendly', :git => 'https://github.com/brooksjbr/acts_as_seo_friendly'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -62,6 +62,7 @@ gem 'twitter-bootstrap-rails'
 # Use debugger
 group :development, :test do
 	gem 'debugger'
+	gem 'bullet'
 end
 
 group :test do
