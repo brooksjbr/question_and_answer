@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/brooksjbr/acts_as_seo_friendly
-  revision: 5a149524b64349f7333ed53fd1a9f1c8f83e93ce
+  revision: 74f6d6285b3ba887d0d1c3dd189b18806f853b38
   specs:
-    acts_as_seo_friendly (2.0.1)
+    acts_as_seo_friendly (2.0.2)
       activerecord (~> 4.0.0)
       activesupport (~> 4.0.0)
 
@@ -180,7 +180,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_seo_friendly!
+  acts_as_seo_friendly (>= 2.0.2)!
   bullet
   capybara
   coffee-rails (~> 4.0.0)
@@ -190,7 +190,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   pg
-  questionable (= 0.0.7)!
+  questionable (>= 0.0.7)!
   rails (= 4.0.0)
   rails_serve_static_assets
   rspec-rails
